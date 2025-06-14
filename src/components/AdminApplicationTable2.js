@@ -7,6 +7,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Close';
+import { ruRU } from '@mui/x-data-grid/locales';
 import {
     GridRowModes,
     DataGrid,
@@ -211,6 +212,7 @@ export default function FullFeaturedCrudGrid() {
             }}
         >
             <DataGrid
+                localeText={ruRU.components.MuiDataGrid.defaultProps.localeText}
                 rows={rows}
                 columns={columns}
                 editMode="row"

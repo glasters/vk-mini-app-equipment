@@ -14,7 +14,7 @@ import {
     Toolbar,
     ToolbarButton,
 } from '@mui/x-data-grid';
-
+import { ruRU } from '@mui/x-data-grid/locales';
 const initialRows = [
     { id: 1, vnaim: 'Шнур 16-прядный 6мм', kolich: 14,zenaz:100, zenapr:10,sost:null, },
     { id: 2, vnaim: 'Карабин "Ринг"(сталь)', kolich: 3,zenaz:200, zenapr:20,sost:null, },
@@ -190,6 +190,7 @@ export default function FullFeaturedCrudGrid() {
             }}
         >
             <DataGrid
+                localeText={ruRU.components.MuiDataGrid.defaultProps.localeText}
                 rows={rows}
                 columns={columns}
                 editMode="row"
