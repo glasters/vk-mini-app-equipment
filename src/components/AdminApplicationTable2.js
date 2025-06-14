@@ -27,8 +27,9 @@ const randomRole = () => {
 };
 
 const initialRows = [
-    { id: 1, user_name: 'Тестов Тест Тестович', name: 'Шнур 16-прядный 6мм', amount: 1, period: '03.05.2025-15.05.2025', zenaz: 6.00 },
-    { id: 2, user_name: 'Тестов Тест Тестович', name: 'Каска М-10', amount: 2, period: '03.05.2025-15.05.2025', zenaz: 2200 },
+    { id: 1,user_name: 'Антонов Сергей',name: 'Шнур 16-прядный 6мм', amount: 1, period: '06.06.2025-06.06.2025', zenaz: 100.00 },
+    { id: 2,user_name: 'Антонов Сергей',name: 'Карабин "Ринг"(сталь)', amount: 1, period: '06.06.2025-06.06.2025', zenaz: 200.00 },
+    { id: 3,user_name: 'Антонов Сергей',name: 'Заглушка', amount: 1, period: '06.06.2025-06.06.2025', zenaz: 300.00 },
 ];
 
 function EditToolbar(props) {
@@ -131,7 +132,7 @@ export default function FullFeaturedCrudGrid() {
         },
         {
           field: 'zenaz',
-          headerName: 'Цена залога',
+          headerName: 'Цена залога (руб./день)',
           width: 120,
           editable: true,
           type: 'number',

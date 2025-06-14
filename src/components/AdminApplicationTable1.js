@@ -27,7 +27,9 @@ const randomRole = () => {
 };
 
 const initialRows = [
-    { id: 1, name: 'Тестов Тест Тестович', status: 'Занято' },
+    { id: 1, name: 'Чёрный Сергей', status: 'Оплачено' },
+    { id: 2, name: 'Чёрный Сергей', status: 'На рассмотрении' },
+    { id: 3, name: 'Антонов Сергей', status: 'Оплачено' },
 ];
 
 function EditToolbar(props) {
@@ -112,7 +114,7 @@ export default function FullFeaturedCrudGrid() {
             headerAlign: 'left',
             editable: true,
             type: 'singleSelect',
-            valueOptions: ['Возможно занято', 'Занято'],
+            valueOptions: ['На рассмотрении','Предварительно оплачено','Оплачено', 'Сдано'],
         },
         {
             field: 'actions',

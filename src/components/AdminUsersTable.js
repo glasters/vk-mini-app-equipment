@@ -27,7 +27,9 @@ const randomRole = () => {
 };
 
 const initialRows = [
-    { id: 1, name: 'Тестов Тест Тестович', login: 'test', password: 'qwerty', passport: '0000 000000', address: 'г. Тестов, ул. Ярослава Тестова, дом. 21', role: 1 },
+    
+    { id: 1, name: 'Антонов Сергей', login: '146671328', passport: '', address: '', role: 'Заведующий снаряжением' },
+    { id: 2, name: 'Чёрный Сергей', login: '1053899166', passport: '', address: '', role: 'Арендатор' },
 ];
 
 function EditToolbar(props) {
@@ -110,17 +112,12 @@ export default function FullFeaturedCrudGrid() {
         },
         {
           field: 'login',
-          headerName: 'Логин',
-          editable: true,
-        },
-        {
-          field: 'password',
-          headerName: 'Пароль',
+          headerName: 'ID_VK',
           editable: true,
         },
         {
           field: 'passport',
-          headerName: 'Паспорт',
+          headerName: 'Документ',
           editable: true,
           width: 120,
         },
@@ -138,7 +135,7 @@ export default function FullFeaturedCrudGrid() {
             headerAlign: 'left',
             editable: true,
             type: 'singleSelect',
-            valueOptions: ['Пользователь', 'Администратор'],
+            valueOptions: ['Арендатор', 'Заведующий снаряжением'],
         },
         {
             field: 'actions',

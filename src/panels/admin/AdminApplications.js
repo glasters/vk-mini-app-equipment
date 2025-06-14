@@ -48,13 +48,13 @@ const headCells = [
     id: 'borrow_price',
     numeric: true,
     disablePadding: false,
-    label: 'Цена залога',
+    label: 'Цена залога (руб./день)',
   },
   {
     id: 'price',
     numeric: true,
     disablePadding: false,
-    label: 'Цена проката',
+    label: 'Цена проката (руб./день)',
   },
   {
     id: 'ingredients',
@@ -72,8 +72,10 @@ function createData(id, category, name, quantity, borrowPrice, price, ingredient
 }
 
 const rows = [
-  createData(1, 'Горное', 'Шнур 16-пряный 6мм', 2, 6.00, 0.00, ''),
-  createData(2, 'Общее', 'Палатка "Байкал-4"', 2, 4700, 100.00, 'Чехол палатки, чехол колышков, чехол дуг, дуга длинная 2шт...'),
+  createData(1, 'Горное', 'Шнур 16-пряный 6мм', 1, 100.00, 10.00, ''),
+  createData(2, 'Горное', 'Карабин "Ринг"(сталь)', 3, 200.00, 20.00, ''),
+  createData(3, 'Водное', 'Заглушка', 6, 300.00, 30.00, ''),
+  
 ];
 
 function getRandomInt(min, max) {

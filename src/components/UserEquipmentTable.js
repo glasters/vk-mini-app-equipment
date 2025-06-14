@@ -15,6 +15,7 @@ import {
     Toolbar,
     ToolbarButton,
 } from '@mui/x-data-grid';
+import { ruRU } from '@mui/x-data-grid/locales';
 import {
     randomCreatedDate,
     randomTraderName,
@@ -28,10 +29,10 @@ const randomRole = () => {
 };
 
 const initialRows = [
-    { id: 1, tnaim: 'Горное', vnaim: 'Шнур 16-прядный 6мм', kolich: 14,zenaz:100, zenapr:100 },
-    { id: 2, tnaim: 'Горное', vnaim: 'Карабин "Ринг"(сталь)', kolich: 3,zenaz:200, zenapr:200 },
-    { id: 3, tnaim: 'Водное', vnaim: 'Заглушка', kolich: 6,zenaz:300, zenapr:300 },
-    { id: 4, tnaim: 'Водное', vnaim: 'Байдарка "Таймень"', kolich: 7,zenaz:400, zenapr:400 },
+    { id: 1, tnaim: 'Горное', vnaim: 'Шнур 16-прядный 6мм', kolich: 14,zenaz:100, zenapr:10 },
+    { id: 2, tnaim: 'Горное', vnaim: 'Карабин "Ринг"(сталь)', kolich: 3,zenaz:200, zenapr:20 },
+    { id: 3, tnaim: 'Водное', vnaim: 'Заглушка', kolich: 6,zenaz:300, zenapr:30 },
+    { id: 4, tnaim: 'Водное', vnaim: 'Байдарка "Таймень"', kolich: 7,zenaz:400, zenapr:40 },
 ];
 
 function EditToolbar(props) {
@@ -105,11 +106,11 @@ export default function FullFeaturedCrudGrid() {
     };
 
     const columns = [
-        { field: 'id', headerName: '№', width: 10, editable: false },
+        { field: 'id', headerName: '№', width: 10, editable: false,hide: true },
         {
             field: 'tnaim',
             headerName: 'Категория',
-            width: 80,
+            width: 30,
             align: 'left',
             headerAlign: 'left',
             editable: false,
@@ -119,19 +120,19 @@ export default function FullFeaturedCrudGrid() {
         {
             field: 'vnaim',
             headerName: 'Наименование',
-            width: 220,
+            width: 200,
             editable: false,
         },
         {
             field: 'kolich',
             headerName: 'Количество',
-            width: 120,
+            width: 50,
             editable: false,
             type: 'number',
         },
         {
             field: 'zenaz',
-            headerName: 'Цена залога',
+            headerName: 'Цена залога (руб./день)',
             width: 120,
             editable: false,
             type: 'number',
@@ -139,14 +140,14 @@ export default function FullFeaturedCrudGrid() {
         {
             field: 'zenapr',
             headerName: 'Цена проката (руб./день)',
-            width: 150,
+            width: 30,
             editable: false,
             type: 'number',
         },
         {
             field: 'actions',
             type: 'actions',
-            headerName: 'Actions',
+            headerName: 'Действия',
             width: 100,
             cellClassName: 'actions',
             getActions: ({ id }) => {
@@ -177,6 +178,10 @@ export default function FullFeaturedCrudGrid() {
             }}
         >
             <DataGrid
+                columnVisibilityModel={{
+                    id: false,
+                }}
+                localeText={ruRU.components.MuiDataGrid.defaultProps.localeText}
                 rows={rows}
                 columns={columns}
                 editMode="row"
@@ -189,6 +194,7 @@ export default function FullFeaturedCrudGrid() {
                     toolbar: { setRows, setRowModesModel },
                 }}
                 showToolbar
+
             />
         </Box>
     );

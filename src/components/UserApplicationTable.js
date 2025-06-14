@@ -16,9 +16,9 @@ import {
 } from '@mui/x-data-grid';
 
 const initialRows = [
-    { id: 1, vnaim: 'Шнур 16-прядный 6мм', kolich: 14,zenaz:100, zenapr:100 },
-    { id: 2, vnaim: 'Карабин "Ринг"(сталь)', kolich: 3,zenaz:200, zenapr:200 },
-    { id: 3, vnaim: 'Заглушка', kolich: 6, zenaz:300, zenapr:300 },
+    { id: 1, vnaim: 'Шнур 16-прядный 6мм', kolich: 14,zenaz:100, zenapr:10,sost:null, },
+    { id: 2, vnaim: 'Карабин "Ринг"(сталь)', kolich: 3,zenaz:200, zenapr:20,sost:null, },
+    { id: 3, vnaim: 'Заглушка', kolich: 6, zenaz:300, zenapr:30,sost: 'Заглушка', },
 ];
 
 function EditToolbar(props) {
@@ -107,7 +107,7 @@ export default function FullFeaturedCrudGrid() {
         },
         {
             field: 'zenaz',
-            headerName: 'Цена залога',
+            headerName: 'Цена залога (руб./день)',
             width: 120,
             editable: true,
             type: 'number',
@@ -120,9 +120,16 @@ export default function FullFeaturedCrudGrid() {
             type: 'number',
         },
         {
+            field: 'sost',
+            headerName: 'Состав',
+            width: 250,
+            editable: true,
+            type: 'number',
+        },
+        {
             field: 'actions',
             type: 'actions',
-            headerName: 'Actions',
+            headerName: 'Действия',
             width: 100,
             cellClassName: 'actions',
             getActions: ({ id }) => {
@@ -195,6 +202,7 @@ export default function FullFeaturedCrudGrid() {
                     toolbar: { setRows, setRowModesModel },
                 }}
                 showToolbar
+
             />
         </Box>
     );

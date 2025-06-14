@@ -11,6 +11,8 @@ import Calendar from 'react-calendar';
 // import 'react-calendar/dist/Calendar.css';
 import './../../assets/css/main.css';
 import * as React from 'react';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { ruRU } from '@mui/x-data-grid/locales';
 
 
 const headCells = [
@@ -48,13 +50,13 @@ const headCells = [
     id: 'borrow_price',
     numeric: true,
     disablePadding: false,
-    label: 'Цена залога',
+    label: 'Цена залога (руб./день)',
   },
   {
     id: 'price',
     numeric: true,
     disablePadding: false,
-    label: 'Цена проката',
+    label: 'Цена проката (руб./день)',
   },
   {
     id: 'ingredients',
@@ -147,8 +149,20 @@ export const UserEquipments = ({ id, fetchedUser }) => {
   //   }
   // }, [equipments]);
 
+
+const theme = createTheme(
+  {
+    palette: {
+      primary: { main: '#1976d2' },
+    },
+  },
+  ruRU,
+);
+
   return (
+    
     <Panel id={id}>
+      
       <PanelHeader before={<PanelHeaderBack onClick={() => routeNavigator.back()} />}>
         Снаряжение
       </PanelHeader>
@@ -158,7 +172,7 @@ export const UserEquipments = ({ id, fetchedUser }) => {
             <Table/>
           </SplitCol>
           <SplitCol width={'250px'} cs={{'padding-left': '10px'}} ref={calendarRef}>
-            <Calendar onChange={onChangeCalendar} value={new Date()} className={['busy-' + getRandomInt(1, 28), 'mbusy-' + getRandomInt(1, 28)]} />
+            <Calendar onChange={onChangeCalendar} value={new Date()} className={['busy-' + 9, 'mbusy-' + 11]} />
             <table border={1} style={{'width': '100%'}}>
               <thead>
                 <tr>

@@ -47,13 +47,13 @@ const headCells = [
     id: 'borrow_price',
     numeric: true,
     disablePadding: false,
-    label: 'Цена залога',
+    label: 'Цена залога (руб./день)',
   },
   {
     id: 'price',
     numeric: true,
     disablePadding: false,
-    label: 'Цена проката',
+    label: 'Цена проката (руб./день)',
   },
   {
     id: 'ingredients',
