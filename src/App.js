@@ -5,7 +5,7 @@ import { View, SplitLayout, SplitCol, ScreenSpinner, FixedLayout, Separator, Tab
 } from '@vkontakte/vkui';
 import { useActiveVkuiLocation } from '@vkontakte/vk-mini-apps-router';
 
-import { Persik, Equipments, UserEquipments, AdminEquipments, AdminUsers, Home, AdminApplications} from './panels';
+import { Persik, Equipments, UserEquipments,UserEquipments2, AdminEquipments, AdminUsers, Home, AdminApplications} from './panels';
 import { DEFAULT_VIEW_PANELS } from './routes';
 import PropTypes from "prop-types";
 import MainButtons from "./components/MainButtons.js"
@@ -61,6 +61,7 @@ export const App = () => {
         <View activePanel={activePanel}>
           <Home id={DEFAULT_VIEW_PANELS.HOME} fetchedUser={fetchedUser} />
           <UserEquipments id={DEFAULT_VIEW_PANELS.USER_EQUIPMENTS} fetchedUser={fetchedUser} />
+          <UserEquipments2 id={DEFAULT_VIEW_PANELS.USER_EQUIPMENTS2} fetchedUser={fetchedUser} />
           <AdminEquipments id={DEFAULT_VIEW_PANELS.ADMIN_EQUIPMENTS} fetchedUser={fetchedUser} />
           <AdminUsers id={DEFAULT_VIEW_PANELS.ADMIN_USERS} fetchedUser={fetchedUser} />
           <AdminApplications id={DEFAULT_VIEW_PANELS.ADMIN_APPLICATIONS} fetchedUser={fetchedUser} />

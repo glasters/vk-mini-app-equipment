@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import Tooltip from '@mui/material/Tooltip';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
+import CartIcon from '@mui/icons-material/AddShoppingCart';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Close';
@@ -14,6 +15,7 @@ import {
     Toolbar,
     ToolbarButton,
 } from '@mui/x-data-grid';
+import { ruRU } from '@mui/x-data-grid/locales';
 import {
     randomCreatedDate,
     randomTraderName,
@@ -29,7 +31,7 @@ const randomRole = () => {
 const initialRows = [
     { id: 1, tnaim: 'Горное', vnaim: 'Шнур 16-прядный 6мм', kolich: 14,zenaz:100, zenapr:10, sost: null },
     { id: 2, tnaim: 'Горное', vnaim: 'Карабин "Ринг"(сталь)', kolich: 3,zenaz:200, zenapr:20, sost: null },
-    { id: 3, tnaim: 'Водное', vnaim: 'Заглушка', kolich: 6,zenaz:300, zenapr:30, sostav: 'Заглушка' },
+    { id: 3, tnaim: 'Водное', vnaim: 'Заглушка', kolich: 6,zenaz:300, zenapr:30, sost: 'Заглушка' },
     { id: 4, tnaim: 'Водное', vnaim: 'Байдарка "Таймень"', kolich: 7,zenaz:40, zenapr:400, sost: null },
 ];
 
@@ -104,42 +106,42 @@ export default function FullFeaturedCrudGrid() {
     };
 
     const columns = [
-        { field: 'id', headerName: '№', width: 10, editable: false },
+        { field: 'id', headerName: '№', width: 10, editable: false,hide: true },
         {
             field: 'tnaim',
             headerName: 'Категория',
-            width: 150,
+            width: 30,
             align: 'left',
             headerAlign: 'left',
-            editable: true,
+            editable: false,
             type: 'singleSelect',
             valueOptions: ['Горное', 'Водное', 'Общее'],
         },
         {
             field: 'vnaim',
             headerName: 'Наименование',
-            width: 220,
-            editable: true,
+            width: 200,
+            editable: false,
         },
         {
             field: 'kolich',
             headerName: 'Количество',
-            width: 120,
-            editable: true,
+            width: 50,
+            editable: false,
             type: 'number',
         },
         {
             field: 'zenaz',
             headerName: 'Цена залога (руб./день)',
             width: 120,
-            editable: true,
+            editable: false,
             type: 'number',
         },
         {
             field: 'zenapr',
             headerName: 'Цена проката (руб./день)',
-            width: 150,
-            editable: true,
+            width: 30,
+            editable: false,
             type: 'number',
         },
         {
@@ -147,55 +149,7 @@ export default function FullFeaturedCrudGrid() {
             headerName: 'Состав',
             width: 250,
             editable: true,
-            type: 'number',
-        },
-        {
-            field: 'actions',
-            type: 'actions',
-            headerName: 'Actions',
-            width: 100,
-            cellClassName: 'actions',
-            getActions: ({ id }) => {
-                const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
-
-                if (isInEditMode) {
-                    return [
-                        <GridActionsCellItem
-                            icon={<SaveIcon />}
-                            label="Save"
-                            material={{
-                                sx: {
-                                    color: 'primary.main',
-                                },
-                            }}
-                            onClick={handleSaveClick(id)}
-                        />,
-                        <GridActionsCellItem
-                            icon={<CancelIcon />}
-                            label="Cancel"
-                            className="textPrimary"
-                            onClick={handleCancelClick(id)}
-                            color="inherit"
-                        />,
-                    ];
-                }
-
-                return [
-                    <GridActionsCellItem
-                        icon={<EditIcon />}
-                        label="Edit"
-                        className="textPrimary"
-                        onClick={handleEditClick(id)}
-                        color="inherit"
-                    />,
-                    <GridActionsCellItem
-                        icon={<DeleteIcon />}
-                        label="Delete"
-                        onClick={handleDeleteClick(id)}
-                        color="inherit"
-                    />,
-                ];
-            },
+            
         },
     ];
 
@@ -213,6 +167,10 @@ export default function FullFeaturedCrudGrid() {
             }}
         >
             <DataGrid
+                columnVisibilityModel={{
+                    id: false,
+                }}
+                localeText={ruRU.components.MuiDataGrid.defaultProps.localeText}
                 rows={rows}
                 columns={columns}
                 editMode="row"
@@ -225,6 +183,7 @@ export default function FullFeaturedCrudGrid() {
                     toolbar: { setRows, setRowModesModel },
                 }}
                 showToolbar
+
             />
         </Box>
     );

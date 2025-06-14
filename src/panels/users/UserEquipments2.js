@@ -1,12 +1,12 @@
 import {Panel, PanelHeader, Header, Button, Group, Cell, Div, Avatar, SplitCol, SplitLayout, PanelHeaderBack} from '@vkontakte/vkui';
 import { useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
 import PropTypes from 'prop-types';
-import {getAllEquipments} from './../../api/Equipments.js';
+import {getAllEquipments} from '../../api/Equipments.js';
 import {createContext, useContext, useEffect, useState, useRef} from "react";
-import EditEquipmentForm from "./../../components/EditEquipmentForm.js";
-import EditApplicationForm from "./../../components/EditApplicationForm.js";
-import Table from "./../../components/UserEquipmentTable.js";
-import TableApplication from "./../../components/UserApplicationTable.js";
+import EditEquipmentForm from "../../components/EditEquipmentForm.js";
+import EditApplicationForm from "../../components/EditApplicationForm.js";
+import Table from "../../components/UserEquipmentTable2.js";
+import TableApplication from "../../components/UserApplicationTable.js";
 import Calendar from 'react-calendar';
 // import 'react-calendar/dist/Calendar.css';
 import './../../assets/css/main.css';
@@ -84,7 +84,7 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-export const UserEquipments = ({ id, fetchedUser }) => {
+export const UserEquipments2 = ({ id, fetchedUser }) => {
   // return (
   //     <label>testsdf</label>
   // );
@@ -185,18 +185,11 @@ export const UserEquipments = ({ id, fetchedUser }) => {
           </SplitCol>
         </SplitLayout>
       </Group>
-      <Group header={<Header size="s">Ваша заявка</Header>}>
-        <TableApplication/>
-        <div style={{'margin': '10px'}}>
-          <label>Цена залога: 600.00 руб</label>
-        </div>
-        <EditApplicationForm />
-      </Group>
     </Panel>
   );
 };
 
-UserEquipments.propTypes = {
+UserEquipments2.propTypes = {
   id: PropTypes.string.isRequired,
   fetchedUser: PropTypes.shape({
     photo_200: PropTypes.string,

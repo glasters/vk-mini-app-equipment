@@ -2,6 +2,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Tooltip from '@mui/material/Tooltip';
 import AddIcon from '@mui/icons-material/Add';
+import AddIcon2 from '@mui/icons-material/Print';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import SaveIcon from '@mui/icons-material/Save';
@@ -46,10 +47,19 @@ function EditToolbar(props) {
             [id]: { mode: GridRowModes.Edit, fieldToFocus: 'name' },
         }));
     };
+    const handleClick2 = () => {
+        const id = randomId();
+        
+    };
 
     return (
         <Toolbar>
-            <Tooltip title="Add record">
+            <Tooltip title="Печать акта приема-передачи">
+                <ToolbarButton onClick={handleClick2}>
+                    <AddIcon2 fontSize="small" />
+                </ToolbarButton>
+            </Tooltip>
+            <Tooltip title="Добавить запись">
                 <ToolbarButton onClick={handleClick}>
                     <AddIcon fontSize="small" />
                 </ToolbarButton>
