@@ -198,11 +198,11 @@ export default function FullFeaturedCrudGrid() {
                 onRowModesModelChange={handleRowModesModelChange}
                 onRowEditStop={handleRowEditStop}
                 processRowUpdate={processRowUpdate}
-                slots={{ toolbar: EditToolbar }}
-                slotProps={{
-                    toolbar: { setRows, setRowModesModel },
-                }}
-                showToolbar
+                //slots={{ toolbar: EditToolbar }}
+                //slotProps={{
+                //    toolbar: { setRows, setRowModesModel },
+                //}}
+                //showToolbar
 
             />
         </Box>

@@ -119,75 +119,77 @@ export default function AdminApplicationTable1() {
             }, 1000);
         });
     }, []);
+    
 
     const handlePrintClick = async (id) => {
-        if (isEquipmentLoading) {
-            console.log('Print already in progress, ignoring click');
-            return;
-        }
 
-        setSelectedRowId(id);
-        setIsEquipmentLoading(true);
-        console.log('Print clicked:', { id, equipment });
-
-        try {
-            const loadedEquipment = await loadEquipmentData(id);
-            setEquipment(loadedEquipment);
-            console.log('Equipment set for print:', loadedEquipment);
-
-            if (loadedEquipment.length === 0) {
-                setErrorMessage('Данные оборудования отсутствуют');
-                return;
-            }
-
-            await new Promise((resolve) => setTimeout(resolve, 1000));
-            if (!printRef.current) {
-                console.error('printRef is not set');
-                setErrorMessage('Ошибка: область печати не найдена');
-                return;
-            }
-
-            setDebugVisible(true);
-            await new Promise((resolve) => setTimeout(resolve, 500));
-            console.log('Capturing printRef content:', printRef.current.innerHTML);
-
-            console.log('Generating PDF...');
-            const canvas = await html2canvas(printRef.current, { 
-                scale: 3, 
-                useCORS: true,
-                logging: true,
-                backgroundColor: '#ffffff'
-            });
-            const imgData = canvas.toDataURL('image/png');
-            console.log('Canvas generated, size:', canvas.width, 'x', canvas.height);
-
-            const pdf = new jsPDF('p', 'mm', 'a4');
-            const imgWidth = 190;
-            const pageHeight = 295;
-            const imgHeight = (canvas.height * imgWidth) / canvas.width;
-            let heightLeft = imgHeight;
-            let position = 10;
-
-            pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
-            heightLeft -= pageHeight;
-
-            while (heightLeft > 0) {
-                position = heightLeft - imgHeight + 10;
-                pdf.addPage();
-                pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
-                heightLeft -= pageHeight;
-            }
-
-            pdf.save(`documents-${id}.pdf`);
-            console.log('PDF saved');
-            setDebugVisible(false);
-        } catch (error) {
-            console.error('Error during print:', error);
-            setErrorMessage('Ошибка при подготовке печати');
-            setDebugVisible(false);
-        } finally {
-            setIsEquipmentLoading(false);
-        }
+        //if (isEquipmentLoading) {
+        //    console.log('Print already in progress, ignoring click');
+        //    return;
+        //}
+		//
+        //setSelectedRowId(id);
+        //setIsEquipmentLoading(true);
+        //console.log('Print clicked:', { id, equipment });
+		//
+        //try {
+        //    const loadedEquipment = await loadEquipmentData(id);
+        //    setEquipment(loadedEquipment);
+        //    console.log('Equipment set for print:', loadedEquipment);
+		//
+        //    if (loadedEquipment.length === 0) {
+        //        setErrorMessage('Данные оборудования отсутствуют');
+        //        return;
+        //    }
+		//
+        //    await new Promise((resolve) => setTimeout(resolve, 1000));
+        //    if (!printRef.current) {
+        //        console.error('printRef is not set');
+        //        setErrorMessage('Ошибка: область печати не найдена');
+        //        return;
+        //    }
+		//
+        //    setDebugVisible(true);
+        //    await new Promise((resolve) => setTimeout(resolve, 500));
+        //    console.log('Capturing printRef content:', printRef.current.innerHTML);
+		//
+        //    console.log('Generating PDF...');
+        //    const canvas = await html2canvas(printRef.current, { 
+        //        scale: 3, 
+        //        useCORS: true,
+        //        logging: true,
+        //        backgroundColor: '#ffffff'
+        //    });
+        //    const imgData = canvas.toDataURL('image/png');
+        //    console.log('Canvas generated, size:', canvas.width, 'x', canvas.height);
+		//
+        //    const pdf = new jsPDF('p', 'mm', 'a4');
+        //    const imgWidth = 190;
+        //    const pageHeight = 295;
+        //    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+        //    let heightLeft = imgHeight;
+        //    let position = 10;
+		//
+        //    pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+        //    heightLeft -= pageHeight;
+		//
+        //    while (heightLeft > 0) {
+        //        position = heightLeft - imgHeight + 10;
+        //        pdf.addPage();
+        //        pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+        //        heightLeft -= pageHeight;
+        //    }
+		//
+        //    pdf.save(`documents-${id}.pdf`);
+        //    console.log('PDF saved');
+        //    setDebugVisible(false);
+        //} catch (error) {
+        //    console.error('Error during print:', error);
+        //    setErrorMessage('Ошибка при подготовке печати');
+        //    setDebugVisible(false);
+        //} finally {
+        //    setIsEquipmentLoading(false);
+        //}
     };
 
     const processRowUpdate = (newRow) => {
@@ -253,12 +255,12 @@ export default function AdminApplicationTable1() {
                             onClick={handleDeleteClick(id)}
                             color="inherit"
                         />,
-                        <GridActionsCellItem
-                            icon={<VisibilityIcon />}
-                            label="View Equipment"
-                            onClick={handleViewEquipmentClick(id)}
-                            color="inherit"
-                        />,
+                        //<GridActionsCellItem
+                        //    icon={<VisibilityIcon />}
+                        //    label="View Equipment"
+                        //    onClick={handleViewEquipmentClick(id)}
+                        //    color="inherit"
+                        ///>,
                         <GridActionsCellItem
                             icon={<PrintIcon />}
                             label="Print"
@@ -277,7 +279,7 @@ export default function AdminApplicationTable1() {
         setEquipment(data);
         setIsEquipmentLoading(false);
     }, []);
-
+    const htmls = `https://equpment-rent-club.ru/blank-akt-priema-peredachi2.html`;
     return (
         <Box
             sx={{
@@ -287,110 +289,103 @@ export default function AdminApplicationTable1() {
                 '& .textPrimary': { color: 'text.primary' },
             }}
         >
-            <DataGrid
-                localeText={ruRU.components.MuiDataGrid.defaultProps.localeText}
-                rows={rows}
-                columns={columns}
-                editMode="row"
-                rowModesModel={rowModesModel}
-                onRowModesModelChange={handleRowModesModelChange}
-                onRowEditStop={handleRowEditStop}
-                processRowUpdate={processRowUpdate}
-                slots={{ toolbar: EditToolbar }}
-                slotProps={{ toolbar: { setRows, setRowModesModel } }}
-            />
-            <Modal open={openModal} onClose={handleCloseModal}>
-                <Box
-                    sx={{
-                        position: 'absolute',
-                        top: '50%',
-                        left: '50%',
-                        transform: 'translate(-50%, -50%)',
-                        width: '80%',
-                        maxHeight: '80vh',
-                        bgcolor: 'background.paper',
-                        boxShadow: 24,
-                        p: 4,
-                        overflow: 'auto',
-                    }}
-                >
-                    <Typography variant="h6" gutterBottom>
-                        Снаряжение для заявки #{selectedRowId}
-                    </Typography>
-                    {selectedRow && (
-                        <>
-                            <Typography>ФИО: {selectedRow.name}</Typography>
-                            <Typography>Статус: {selectedRow.status}</Typography>
-                        </>
-                    )}
-                    <AdminEquipmentTable
-                        applicationId={selectedRowId}
-                        onDataChange={onDataChange}
-                    />
-                </Box>
-            </Modal>
-            <div style={{ 
-                position: 'absolute', 
-                left: '-9999px', 
-                width: '210mm', 
-                minHeight: '297mm', 
-                backgroundColor: '#ffffff',
-                padding: '10mm'
-            }}>
-                <Box ref={printRef}>
-                    {selectedRow ? (
-                        <>
-                            <ActTransmission
-                                application={{ id: selectedRow.id, userFullName: selectedRow.name, date: selectedRow.date }}
-                                equipment={equipment}
-                            />
-                            <div style={{ pageBreakBefore: 'always' }} />
-                            <ActReception
-                                application={{ id: selectedRow.id, userFullName: selectedRow.name, date: selectedRow.date }}
-                                equipment={equipment}
-                            />
-                        </>
-                    ) : (
-                        <Typography>Нет данных для печати</Typography>
-                    )}
-                </Box>
-            </div>
-            {debugVisible && (
-                <div style={{ 
-                    position: 'fixed', 
-                    top: 0, 
-                    left: 0, 
-                    zIndex: 9999, 
-                    backgroundColor: '#ffffff', 
-                    padding: '20px', 
-                    border: '2px solid red'
+                <DataGrid
+                    localeText={ruRU.components.MuiDataGrid.defaultProps.localeText}
+                    rows={rows}
+                    columns={columns}
+                    editMode="row"
+                    rowModesModel={rowModesModel}
+                    onRowModesModelChange={handleRowModesModelChange}
+                    onRowEditStop={handleRowEditStop}
+                    processRowUpdate={processRowUpdate}
+                    slots={{ toolbar: EditToolbar }}
+                    slotProps={{ toolbar: { setRows, setRowModesModel } }} />
+                <Modal open={openModal} onClose={handleCloseModal}>
+                    <Box
+                        sx={{
+                            position: 'absolute',
+                            top: '50%',
+                            left: '50%',
+                            transform: 'translate(-50%, -50%)',
+                            width: '80%',
+                            maxHeight: '80vh',
+                            bgcolor: 'background.paper',
+                            boxShadow: 24,
+                            p: 4,
+                            overflow: 'auto',
+                        }}
+                    >
+                        <Typography variant="h6" gutterBottom>
+                            Снаряжение для заявки #{selectedRowId}
+                        </Typography>
+                        {selectedRow && (
+                            <>
+                                <Typography>ФИО: {selectedRow.name}</Typography>
+                                <Typography>Статус: {selectedRow.status}</Typography>
+                            </>
+                        )}
+                        <AdminEquipmentTable
+                            applicationId={selectedRowId}
+                            onDataChange={onDataChange} />
+                    </Box>
+                </Modal>
+                <div style={{
+                    position: 'absolute',
+                    left: '-9999px',
+                    width: '210mm',
+                    minHeight: '297mm',
+                    backgroundColor: '#ffffff',
+                    padding: '10mm'
                 }}>
-                    <Typography color="error">Debug: Содержимое для печати</Typography>
-                    <Box>
+                    <Box ref={printRef}>
                         {selectedRow ? (
                             <>
                                 <ActTransmission
                                     application={{ id: selectedRow.id, userFullName: selectedRow.name, date: selectedRow.date }}
-                                    equipment={equipment}
-                                />
+                                    equipment={equipment} />
                                 <div style={{ pageBreakBefore: 'always' }} />
                                 <ActReception
                                     application={{ id: selectedRow.id, userFullName: selectedRow.name, date: selectedRow.date }}
-                                    equipment={equipment}
-                                />
+                                    equipment={equipment} />
                             </>
                         ) : (
                             <Typography>Нет данных для печати</Typography>
                         )}
                     </Box>
                 </div>
-            )}
-            <Snackbar
-                open={!!errorMessage}
-                autoHideDuration={6000}
-                onClose={() => setErrorMessage('')}
-                message={errorMessage}
-            />
-        </Box>
+                {debugVisible && (
+                    <div style={{
+                        position: 'fixed',
+                        top: 0,
+                        left: 0,
+                        zIndex: 9999,
+                        backgroundColor: '#ffffff',
+                        padding: '20px',
+                        border: '2px solid red'
+                    }}>
+                        <Typography color="error">Debug: Содержимое для печати</Typography>
+                        <Box>
+                            {selectedRow ? (
+                                <>
+                                    <ActTransmission
+                                        application={{ id: selectedRow.id, userFullName: selectedRow.name, date: selectedRow.date }}
+                                        equipment={equipment} />
+                                    <div style={{ pageBreakBefore: 'always' }} />
+                                    <ActReception
+                                        application={{ id: selectedRow.id, userFullName: selectedRow.name, date: selectedRow.date }}
+                                        equipment={equipment} />
+                                </>
+                            ) : (
+                                <Typography>Нет данных для печати</Typography>
+                            )}
+                        </Box>
+                    </div>
+                )}
+                <Snackbar
+                    open={!!errorMessage}
+                    autoHideDuration={6000}
+                    onClose={() => setErrorMessage('')}
+                    message={errorMessage} />
+            </Box>
     );
 }

@@ -34,7 +34,7 @@
       </Group>
 
 
-<Group header={<Header size="s">Ваша заявка</Header>}>
+<Group header={<Header size="s">Ваша заявка №3</Header>}>
         <TableApplication/>
         <div style={{'margin': '10px'}}>
           <label>Залог: 600.00 руб</label>

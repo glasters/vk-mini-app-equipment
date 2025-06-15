@@ -1,5 +1,6 @@
 {
   "name": "vk-app",
+  "proxy": "https://equpment-rent-club.ru/",
   "private": true,
   "version": "0.0.0",
   "type": "module",
