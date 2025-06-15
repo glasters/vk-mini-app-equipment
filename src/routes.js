@@ -12,13 +12,14 @@ export const DEFAULT_VIEW = 'default_view';
 
 export const DEFAULT_VIEW_PANELS = {
   HOME: 'home',
-  PERSIK: 'persik',
-  EQUIPMENT: 'equipments',
   USER_EQUIPMENTS: 'user_equipments',
   USER_EQUIPMENTS2: 'user_equipments2',
   ADMIN_EQUIPMENTS: 'admin_equipments',
   ADMIN_USERS: 'admin_users',
   ADMIN_APPLICATIONS: 'admin_applications',
+  ADMIN_APPLICATIONS_TABLE1: 'admin_applications_table1',
+  ADMIN_APPLICATIONS_TABLE2: 'admin_applications_table2',
+  PERSIK: 'persik',
 };
 
 export const routes = RoutesConfig.create([
