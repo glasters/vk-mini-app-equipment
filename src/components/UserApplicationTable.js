@@ -107,14 +107,14 @@ export default function FullFeaturedCrudGrid() {
         },
         {
             field: 'zenaz',
-            headerName: 'Цена залога (руб./день)',
+            headerName: 'Залог (₽)',
             width: 120,
             editable: true,
             type: 'number',
         },
         {
             field: 'zenapr',
-            headerName: 'Цена проката (руб./день)',
+            headerName: 'Прокат (₽/день)',
             width: 150,
             editable: true,
             type: 'number',

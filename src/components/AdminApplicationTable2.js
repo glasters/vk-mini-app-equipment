@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Box, Button, Modal, Typography } from '@mui/material';
+import { Box, Modal, Typography } from '@mui/material';
 import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
 import { ruRU } from '@mui/x-data-grid/locales';
 import PrintIcon from '@mui/icons-material/Print';
@@ -8,125 +8,212 @@ import { useReactToPrint } from 'react-to-print';
 import AdminEquipmentTable from './AdminEquipmentTable';
 import ActTransmission from './ActTransmission';
 import ActReception from './ActReception';
+import { Panel, PanelHeader, Header, Button, Group, Cell, Div, Avatar } from '@vkontakte/vkui';
+import { useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
+import PropTypes from 'prop-types';
+import './../assets/css/main.css';
+import {getAllEquipments} from './../api/Equipments.js';
+import {createContext, useContext, useEffect,} from "react";
+import Table from "./../components/Table.js";
+import EditEquipmentForm from "./../components/EditEquipmentForm.js";
+import {
+    GridRowModes,
+    GridRowEditStopReasons,
+    GridToolbarContainer,
+} from '@mui/x-data-grid';
+import Tooltip from '@mui/material/Tooltip';
+import AddIcon from '@mui/icons-material/Add';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 
 const initialRows = [
-    { id: 1, name: 'Чёрный Сергей', status: 'Оплачено', date: '2025-06-15' },
-    { id: 2, name: 'Антонов Сергей', status: 'Сдано', date: '2025-06-14' },
+    { id: 1, tnaim: 'Горное', vnaim: 'Шнур 16-прядный 6мм', kolich: 1,zenaz:100, zenapr:10, sost: null },
+    { id: 2, tnaim: 'Горное', vnaim: 'Карабин "Ринг"(сталь)', kolich: 1,zenaz:200, zenapr:20, sost: null },
+    { id: 3, tnaim: 'Водное', vnaim: 'Заглушка', kolich: 1,zenaz:300, zenapr:30, sost: 'Заглушка' },
 ];
 
+function EditToolbar({ setRows, setRowModesModel }) {
+    const handleClick = () => {
+        const id = Date.now();
+        setRows((oldRows) => [
+            ...oldRows,
+            { id, tnaim: '', vnaim: '', kolich: 1, zenaz: 0, zenapr: 0, sost: '', isNew: true },
+        ]);
+        setRowModesModel((oldModel) => ({
+            ...oldModel,
+            [id]: { mode: GridRowModes.Edit, fieldToFocus: 'vnaim' },
+        }));
+    };
+
+    return (
+        <GridToolbarContainer>
+            <Tooltip title="Добавить оборудование">
+                <Box component="span" sx={{ cursor: 'pointer', p: 1 }} onClick={handleClick}>
+                    <AddIcon fontSize="small" />
+                </Box>
+            </Tooltip>
+        </GridToolbarContainer>
+    );
+}
 export default function AdminApplicationTable2() {
-    const [rows] = useState(initialRows);
-    const [openModal, setOpenModal] = useState(false);
-    const [selectedRowId, setSelectedRowId] = useState(null);
-    const [equipment, setEquipment] = useState([]);
-    const printRef = useRef();
+    const [rows, setRows] = React.useState(initialRows);
+    const [rowModesModel, setRowModesModel] = React.useState({});
 
-    const handleOpenModal = (id) => () => {
-        setSelectedRowId(id);
-        setOpenModal(true);
+    const handleRowEditStop = (params, event) => {
+        if (params.reason === GridRowEditStopReasons.rowFocusOut) {
+            event.defaultMuiPrevented = true;
+        }
     };
 
-    const handleCloseModal = () => {
-        setOpenModal(false);
-        setSelectedRowId(null);
+    const handleEditClick = (id) => () => {
+        setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
     };
 
-    const handlePrint = useReactToPrint({
-        content: () => printRef.current,
-        documentTitle: 'Документы по заявке',
-        removeAfterPrint: true,
-    });
+    const handleSaveClick = (id) => () => {
+        setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
+    };
+
+    const handleDeleteClick = (id) => () => {
+        setRows(rows.filter((row) => row.id !== id));
+    };
+
+    const handleCancelClick = (id) => () => {
+        setRowModesModel({
+            ...rowModesModel,
+            [id]: { mode: GridRowModes.View, ignoreModifications: true },
+        });
+
+        const editedRow = rows.find((row) => row.id === id);
+        if (editedRow.isNew) {
+            setRows(rows.filter((row) => row.id !== id));
+        }
+    };
+
+    const processRowUpdate = (newRow) => {
+        const updatedRow = { ...newRow, isNew: false };
+        setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
+        return updatedRow;
+    };
+
+    const handleRowModesModelChange = (newRowModesModel) => {
+        setRowModesModel(newRowModesModel);
+    };
 
     const columns = [
-        { field: 'id', headerName: 'ID', width: 50 },
-        { field: 'name', headerName: 'ФИО', width: 200 },
-        { field: 'status', headerName: 'Статус', width: 180 },
+        { field: 'id', headerName: '№', width: 10, editable: false,hide: false },
+        {
+            field: 'vnaim',
+            headerName: 'Наименование',
+            width: 220,
+            editable: true,
+        },
+        {
+            field: 'kolich',
+            headerName: 'Количество',
+            width: 120,
+            editable: true,
+            type: 'number',
+        },
+        {
+            field: 'zenaz',
+            headerName: 'Залог (₽)',
+            width: 120,
+            editable: true,
+            type: 'number',
+        },
+        {
+            field: 'zenapr',
+            headerName: 'Прокат (₽/день)',
+            width: 150,
+            editable: true,
+            type: 'number',
+        },
+        {
+            field: 'sost',
+            headerName: 'Состав',
+            width: 250,
+            editable: true,
+            type: 'number',
+        },
         {
             field: 'actions',
             type: 'actions',
             headerName: 'Действия',
-            width: 150,
-            getActions: ({ id }) => [
-                <GridActionsCellItem
-                    icon={<VisibilityIcon />}
-                    label="Просмотр"
-                    onClick={handleOpenModal(id)}
-                    color="inherit"
-                />,
-                <GridActionsCellItem
-                    icon={<PrintIcon />}
-                    label="Печать"
-                    onClick={() => {
-                        setSelectedRowId(id);
-                        setTimeout(handlePrint, 0);
-                    }}
-                    color="primary"
-                />,
-            ],
+            width: 100,
+            cellClassName: 'actions',
+            getActions: ({ id }) => {
+                const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
+
+                if (isInEditMode) {
+                    return [
+                        <GridActionsCellItem
+                            icon={<SaveIcon />}
+                            label="Save"
+                            material={{
+                                sx: {
+                                    color: 'primary.main',
+                                },
+                            }}
+                            onClick={handleSaveClick(id)}
+                        />,
+                        <GridActionsCellItem
+                            icon={<CancelIcon />}
+                            label="Cancel"
+                            className="textPrimary"
+                            onClick={handleCancelClick(id)}
+                            color="inherit"
+                        />,
+                    ];
+                }
+                
+                return [
+                    <GridActionsCellItem
+                        icon={<EditIcon />}
+                        label="Edit"
+                        className="textPrimary"
+                        onClick={handleEditClick(id)}
+                        color="inherit"
+                    />,
+                    <GridActionsCellItem
+                        icon={<DeleteIcon />}
+                        label="Delete"
+                        onClick={handleDeleteClick(id)}
+                        color="inherit"
+                    />,
+                ];
+            },
         },
     ];
 
-    const selectedRow = rows.find((row) => row.id === selectedRowId);
-
     return (
-        <>
-            <Box sx={{ height: 400, width: '100%' }}>
-                <DataGrid
-                    localeText={ruRU.components.MuiDataGrid.defaultProps.localeText}
-                    rows={rows}
-                    columns={columns}
-                    pageSizeOptions={[5]}
-                />
-            </Box>
+        <Box
+            sx={{
+                height: 350,
+                width: '100%',
+                '& .actions': {
+                    color: 'text.secondary',
+                },
+                '& .textPrimary': {
+                    color: 'text.primary',
+                },
+            }}
+        >
+            <DataGrid
+                localeText={ruRU.components.MuiDataGrid.defaultProps.localeText}
+                rows={rows}
+                columns={columns}
+                editMode="row"
+                rowModesModel={rowModesModel}
+                onRowModesModelChange={handleRowModesModelChange}
+                onRowEditStop={handleRowEditStop}
+                processRowUpdate={processRowUpdate}
+                slots={{ toolbar: EditToolbar }}
+                slotProps={{
+                    toolbar: { setRows, setRowModesModel },
+                }}
+                showToolbar
 
-            <Modal open={openModal} onClose={handleCloseModal}>
-                <Box
-                    sx={{
-                        position: 'absolute',
-                        top: '50%',
-                        left: '50%',
-                        transform: 'translate(-50%, -50%)',
-                        width: '80%',
-                        bgcolor: 'background.paper',
-                        boxShadow: 24,
-                        p: 4,
-                        overflowY: 'auto',
-                        maxHeight: '80vh',
-                    }}
-                >
-                    <Typography variant="h6" gutterBottom>
-                        Снаряжение для заявки #{selectedRowId}
-                    </Typography>
-                    {selectedRow && (
-                        <>
-                            <Typography>ФИО: {selectedRow.name}</Typography>
-                            <Typography>Статус: {selectedRow.status}</Typography>
-                        </>
-                    )}
-                    <AdminEquipmentTable
-                        applicationId={selectedRowId}
-                        onDataChange={setEquipment}
-                    />
-                </Box>
-            </Modal>
-
-            <div style={{ display: 'none' }}>
-                <Box ref={printRef}>
-                    {selectedRow && (
-                        <>
-                            <ActTransmission
-                                application={{ id: selectedRow.id, userFullName: selectedRow.name, date: selectedRow.date }}
-                                equipment={equipment}
-                            />
-                            <div style={{ pageBreakBefore: 'always' }} />
-                            <ActReception
-                                application={{ id: selectedRow.id, userFullName: selectedRow.name, date: selectedRow.date }}
-                                equipment={equipment}
-                            />
-                        </>
-                    )}
-                </Box>
-            </div>
-        </>
+            />
+        </Box>
     );
 }

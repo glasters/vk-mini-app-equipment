@@ -40,7 +40,7 @@ function EditToolbar({ setRows, setRowModesModel }) {
 }
 
 export default function AdminEquipmentTable({ applicationId, onDataChange }) {
-    const [rows, setRows] = useState([]);
+    var [rows, setRows] = useState([]);
     const [rowModesModel, setRowModesModel] = useState({});
 
     const memoizedOnDataChange = useCallback((data) => {
@@ -130,7 +130,12 @@ export default function AdminEquipmentTable({ applicationId, onDataChange }) {
     const handleRowModesModelChange = (newModel) => {
         setRowModesModel(newModel);
     };
-
+    const initialRowsSn = [
+    { id: 1, tnaim: 'Горное', vnaim: 'Шнур 16-прядный 6мм', kolich: 14,zenaz:100, zenapr:10, sost: null },
+    { id: 2, tnaim: 'Горное', vnaim: 'Карабин "Ринг"(сталь)', kolich: 3,zenaz:200, zenapr:20, sost: null },
+    { id: 3, tnaim: 'Водное', vnaim: 'Заглушка', kolich: 6,zenaz:300, zenapr:30, sost: 'Заглушка' },
+    { id: 4, tnaim: 'Водное', vnaim: 'Байдарка "Таймень"', kolich: 7,zenaz:4000, zenapr:40, sost: null },
+];
     const columns = [
         { field: 'id', headerName: '№', width: 50 },
         {
@@ -143,7 +148,7 @@ export default function AdminEquipmentTable({ applicationId, onDataChange }) {
         },
         { field: 'vnaim', headerName: 'Наименование', width: 200, editable: true },
         { field: 'kolich', headerName: 'Количество', width: 120, editable: true, type: 'number' },
-        { field: 'zenaz', headerName: 'Залог (₽/день)', width: 130, editable: true, type: 'number' },
+        { field: 'zenaz', headerName: 'Залог (₽)', width: 130, editable: true, type: 'number' },
         { field: 'zenapr', headerName: 'Прокат (₽/день)', width: 130, editable: true, type: 'number' },
         { field: 'sost', headerName: 'Состав', width: 200, editable: true },
         {
@@ -182,7 +187,7 @@ export default function AdminEquipmentTable({ applicationId, onDataChange }) {
             },
         },
     ];
-
+    rows = initialRowsSn;
     return (
         <Box sx={{ height: 500, width: '100%' }}>
             <DataGrid

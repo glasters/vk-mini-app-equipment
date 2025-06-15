@@ -32,7 +32,7 @@ const initialRows = [
     { id: 1, tnaim: 'Горное', vnaim: 'Шнур 16-прядный 6мм', kolich: 14,zenaz:100, zenapr:10, sost: null },
     { id: 2, tnaim: 'Горное', vnaim: 'Карабин "Ринг"(сталь)', kolich: 3,zenaz:200, zenapr:20, sost: null },
     { id: 3, tnaim: 'Водное', vnaim: 'Заглушка', kolich: 6,zenaz:300, zenapr:30, sost: 'Заглушка' },
-    { id: 4, tnaim: 'Водное', vnaim: 'Байдарка "Таймень"', kolich: 7,zenaz:40, zenapr:400, sost: null },
+    { id: 4, tnaim: 'Водное', vnaim: 'Байдарка "Таймень"', kolich: 7,zenaz:4000, zenapr:400, sost: null },
 ];
 
 function EditToolbar(props) {
@@ -132,14 +132,14 @@ export default function FullFeaturedCrudGrid() {
         },
         {
             field: 'zenaz',
-            headerName: 'Цена залога (руб./день)',
+            headerName: 'Залог (₽)',
             width: 120,
             editable: false,
             type: 'number',
         },
         {
             field: 'zenapr',
-            headerName: 'Цена проката (руб./день)',
+            headerName: 'Прокат (₽/день)',
             width: 30,
             editable: false,
             type: 'number',

@@ -37,7 +37,7 @@
 <Group header={<Header size="s">Ваша заявка</Header>}>
         <TableApplication/>
         <div style={{'margin': '10px'}}>
-          <label>Цена залога: 600.00 руб</label>
+          <label>Залог: 600.00 руб</label>
         </div>
         <EditApplicationForm/>
       </Group>

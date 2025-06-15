@@ -50,13 +50,13 @@ const headCells = [
     id: 'borrow_price',
     numeric: true,
     disablePadding: false,
-    label: 'Цена залога (руб./день)',
+    label: 'Залог (₽)',
   },
   {
     id: 'price',
     numeric: true,
     disablePadding: false,
-    label: 'Цена проката (руб./день)',
+    label: 'Прокат (₽/день)',
   },
   {
     id: 'ingredients',
@@ -188,7 +188,7 @@ export const UserEquipments = ({ id, fetchedUser }) => {
       <Group header={<Header size="s">Ваша заявка</Header>}>
         <TableApplication/>
         <div style={{'margin': '10px'}}>
-          <label>Цена залога: 600.00 руб</label>
+          <label>Залог: 600.00 руб</label>
         </div>
         <EditApplicationForm />
       </Group>
