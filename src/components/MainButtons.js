@@ -16,7 +16,9 @@ export default function RadiusButtonGroup() {
         >
             <Button onClick={() => routeNavigator.push('/' + DEFAULT_VIEW_PANELS.USER_EQUIPMENTS)}>Заявки</Button>
             <Button onClick={() => routeNavigator.push('/' + DEFAULT_VIEW_PANELS.USER_EQUIPMENTS2)}>Список снаряжения</Button>
-            
+            <Button onClick={() => routeNavigator.push('/' + DEFAULT_VIEW_PANELS.ADMIN_EQUIPMENTS)}>Администрирование снаряжения</Button>
+            <Button onClick={() => routeNavigator.push('/' + DEFAULT_VIEW_PANELS.ADMIN_APPLICATIONS)}>Администрирование заявок</Button>
+            <Button onClick={() => routeNavigator.push('/' + DEFAULT_VIEW_PANELS.ADMIN_USERS)}>Администрирование пользователей</Button>
         </ButtonGroup>
     );
 }
