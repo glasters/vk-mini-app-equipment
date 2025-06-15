@@ -122,74 +122,88 @@ export default function AdminApplicationTable1() {
     
 
     const handlePrintClick = async (id) => {
+        function setPrint() {
+          const closePrint = () => {
+            document.body.removeChild(this);
+          };
+          this.contentWindow.onbeforeunload = closePrint;
+          this.contentWindow.onafterprint = closePrint;
+          this.contentWindow.print();
+          
+        }
 
-        //if (isEquipmentLoading) {
-        //    console.log('Print already in progress, ignoring click');
-        //    return;
-        //}
-		//
-        //setSelectedRowId(id);
-        //setIsEquipmentLoading(true);
-        //console.log('Print clicked:', { id, equipment });
-		//
-        //try {
-        //    const loadedEquipment = await loadEquipmentData(id);
-        //    setEquipment(loadedEquipment);
-        //    console.log('Equipment set for print:', loadedEquipment);
-		//
-        //    if (loadedEquipment.length === 0) {
-        //        setErrorMessage('Данные оборудования отсутствуют');
-        //        return;
-        //    }
-		//
-        //    await new Promise((resolve) => setTimeout(resolve, 1000));
-        //    if (!printRef.current) {
-        //        console.error('printRef is not set');
-        //        setErrorMessage('Ошибка: область печати не найдена');
-        //        return;
-        //    }
-		//
-        //    setDebugVisible(true);
-        //    await new Promise((resolve) => setTimeout(resolve, 500));
-        //    console.log('Capturing printRef content:', printRef.current.innerHTML);
-		//
-        //    console.log('Generating PDF...');
-        //    const canvas = await html2canvas(printRef.current, { 
-        //        scale: 3, 
-        //        useCORS: true,
-        //        logging: true,
-        //        backgroundColor: '#ffffff'
-        //    });
-        //    const imgData = canvas.toDataURL('image/png');
-        //    console.log('Canvas generated, size:', canvas.width, 'x', canvas.height);
-		//
-        //    const pdf = new jsPDF('p', 'mm', 'a4');
-        //    const imgWidth = 190;
-        //    const pageHeight = 295;
-        //    const imgHeight = (canvas.height * imgWidth) / canvas.width;
-        //    let heightLeft = imgHeight;
-        //    let position = 10;
-		//
-        //    pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
-        //    heightLeft -= pageHeight;
-		//
-        //    while (heightLeft > 0) {
-        //        position = heightLeft - imgHeight + 10;
-        //        pdf.addPage();
-        //        pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
-        //        heightLeft -= pageHeight;
-        //    }
-		//
-        //    pdf.save(`documents-${id}.pdf`);
-        //    console.log('PDF saved');
-        //    setDebugVisible(false);
-        //} catch (error) {
-        //    console.error('Error during print:', error);
-        //    setErrorMessage('Ошибка при подготовке печати');
-        //    setDebugVisible(false);
-        //} finally {
-        //    setIsEquipmentLoading(false);
-        //}
+            const hideFrame = document.createElement("iframe");
+            hideFrame.onload = setPrint;
+            hideFrame.style.display = "none"; // hide iframe
+            hideFrame.src = "https://equpment-rent-club.ru/blank-akt-priema-peredachi2.html";
+            document.body.appendChild(hideFrame);
+      //if (isEquipmentLoading) {
+      //    console.log('Print already in progress, ignoring click');
+      //    return;
+      //}
+      //
+      //setSelectedRowId(id);
+      //setIsEquipmentLoading(true);
+      //console.log('Print clicked:', { id, equipment });
+      //
+      //try {
+      //    const loadedEquipment = await loadEquipmentData(id);
+      //    setEquipment(loadedEquipment);
+      //    console.log('Equipment set for print:', loadedEquipment);
+      //
+      //    if (loadedEquipment.length === 0) {
+      //        setErrorMessage('Данные оборудования отсутствуют');
+      //        return;
+      //    }
+      //
+      //    await new Promise((resolve) => setTimeout(resolve, 1000));
+      //    if (!printRef.current) {
+      //        console.error('printRef is not set');
+      //        setErrorMessage('Ошибка: область печати не найдена');
+      //        return;
+      //    }
+      //
+      //    setDebugVisible(true);
+      //    await new Promise((resolve) => setTimeout(resolve, 500));
+      //    console.log('Capturing printRef content:', printRef.current.innerHTML);
+      //
+      //    console.log('Generating PDF...');
+      //    const canvas = await html2canvas(printRef.current, {
+      //        scale: 3,
+      //        useCORS: true,
+      //        logging: true,
+      //        backgroundColor: '#ffffff'
+      //    });
+      //    const imgData = canvas.toDataURL('image/png');
+      //    console.log('Canvas generated, size:', canvas.width, 'x', canvas.height);
+      //
+      //    const pdf = new jsPDF('p', 'mm', 'a4');
+      //    const imgWidth = 190;
+      //    const pageHeight = 295;
+      //    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      //    let heightLeft = imgHeight;
+      //    let position = 10;
+      //
+      //    pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+      //    heightLeft -= pageHeight;
+      //
+      //    while (heightLeft > 0) {
+      //        position = heightLeft - imgHeight + 10;
+      //        pdf.addPage();
+      //        pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+      //        heightLeft -= pageHeight;
+      //    }
+      //
+      //    pdf.save(`documents-${id}.pdf`);
+      //    console.log('PDF saved');
+      //    setDebugVisible(false);
+      //} catch (error) {
+      //    console.error('Error during print:', error);
+      //    setErrorMessage('Ошибка при подготовке печати');
+      //    setDebugVisible(false);
+      //} finally {
+      //    setIsEquipmentLoading(false);
+      //}
     };
 
     const processRowUpdate = (newRow) => {
