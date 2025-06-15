@@ -34,15 +34,7 @@ const initialRows = [
 
 function EditToolbar({ setRows, setRowModesModel }) {
     const handleClick = () => {
-        const id = Date.now();
-        setRows((oldRows) => [
-            ...oldRows,
-            { id, tnaim: '', vnaim: '', kolich: 1, zenaz: 0, zenapr: 0, sost: '', isNew: true },
-        ]);
-        setRowModesModel((oldModel) => ({
-            ...oldModel,
-            [id]: { mode: GridRowModes.Edit, fieldToFocus: 'vnaim' },
-        }));
+        
     };
 
     return (
