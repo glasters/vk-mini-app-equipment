@@ -48,13 +48,13 @@ const headCells = [
     id: 'borrow_price',
     numeric: true,
     disablePadding: false,
-    label: 'Цена залога (руб./день)',
+    label: 'Залог (₽)',
   },
   {
     id: 'price',
     numeric: true,
     disablePadding: false,
-    label: 'Цена проката (руб./день)',
+    label: 'Прокат (₽/день)',
   },
   {
     id: 'ingredients',
@@ -157,7 +157,7 @@ export const AdminApplications = ({ id, fetchedUser }) => {
       <Group header={<Header size="s">Список заявок</Header>}>
         <Table1/>
       </Group>
-      <Group header={<Header size="s">Содержимое заявки</Header>}>
+      <Group header={<Header size="s">Содержимое заявки №3</Header>}>
         <Table2/>
       </Group>
     </Panel>

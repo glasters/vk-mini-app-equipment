@@ -15,6 +15,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { ruRU } from '@mui/x-data-grid/locales';
 
 
+
 const headCells = [
   {
     id: 'action',
@@ -50,13 +51,13 @@ const headCells = [
     id: 'borrow_price',
     numeric: true,
     disablePadding: false,
-    label: 'Цена залога (руб./день)',
+    label: 'Залог (₽)',
   },
   {
     id: 'price',
     numeric: true,
     disablePadding: false,
-    label: 'Цена проката (руб./день)',
+    label: 'Прокат (₽/день)',
   },
   {
     id: 'ingredients',

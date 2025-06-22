@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import bridge from '@vkontakte/vk-bridge';
+
 import { View, SplitLayout, SplitCol, ScreenSpinner, FixedLayout, Separator, TabsItem, Epic, usePlatform,
   useAdaptivityConditionalRender
 } from '@vkontakte/vkui';
@@ -45,6 +46,7 @@ export const App = () => {
       })});
       setPopout(null);
   }, []);
+
 
   return (
     <SplitLayout>

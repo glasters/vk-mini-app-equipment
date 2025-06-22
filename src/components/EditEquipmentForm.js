@@ -44,12 +44,12 @@ export default function InputFormProps() {
                     {/*<FormHelperText>This is a helper text.</FormHelperText>*/}
                 </FormControl>
                 <FormControl>
-                    <FormLabel>Цена залога</FormLabel>
+                    <FormLabel>Залог (₽)</FormLabel>
                     <Input type='number'  placeholder="0.00" />
                     {/*<FormHelperText>This is a helper text.</FormHelperText>*/}
                 </FormControl>
                 <FormControl>
-                    <FormLabel>Цена проката</FormLabel>
+                    <FormLabel>Прокат (₽/день)</FormLabel>
                     <Input type='number' placeholder="0.00" />
                     {/*<FormHelperText>This is a helper text.</FormHelperText>*/}
                 </FormControl>

@@ -1,75 +1,53 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Tooltip from '@mui/material/Tooltip';
-import AddIcon from '@mui/icons-material/Add';
-import AddIcon2 from '@mui/icons-material/Print';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/DeleteOutlined';
-import SaveIcon from '@mui/icons-material/Save';
-import CancelIcon from '@mui/icons-material/Close';
+import React, { useRef, useState } from 'react';
+import { Box, Modal, Typography } from '@mui/material';
+import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
 import { ruRU } from '@mui/x-data-grid/locales';
+import PrintIcon from '@mui/icons-material/Print';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import { useReactToPrint } from 'react-to-print';
+import AdminEquipmentTable from './AdminEquipmentTable';
+import ActTransmission from './ActTransmission';
+import ActReception from './ActReception';
+import { Panel, PanelHeader, Header, Button, Group, Cell, Div, Avatar } from '@vkontakte/vkui';
+import { useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
+import PropTypes from 'prop-types';
+import './../assets/css/main.css';
+import {getAllEquipments} from './../api/Equipments.js';
+import {createContext, useContext, useEffect,} from "react";
+import Table from "./../components/Table.js";
+import EditEquipmentForm from "./../components/EditEquipmentForm.js";
 import {
     GridRowModes,
-    DataGrid,
-    GridActionsCellItem,
     GridRowEditStopReasons,
-    Toolbar,
-    ToolbarButton,
+    GridToolbarContainer,
 } from '@mui/x-data-grid';
-import {
-    randomCreatedDate,
-    randomTraderName,
-    randomId,
-    randomArrayItem,
-} from '@mui/x-data-grid-generator';
-
-const roles = ['Market', 'Finance', 'Development'];
-const randomRole = () => {
-    return randomArrayItem(roles);
-};
+import Tooltip from '@mui/material/Tooltip';
+import AddIcon from '@mui/icons-material/Add';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 
 const initialRows = [
-    { id: 1,user_name: 'Антонов Сергей',name: 'Шнур 16-прядный 6мм', amount: 1, period: '06.06.2025-06.06.2025', zenaz: 100.00 },
-    { id: 2,user_name: 'Антонов Сергей',name: 'Карабин "Ринг"(сталь)', amount: 1, period: '06.06.2025-06.06.2025', zenaz: 200.00 },
-    { id: 3,user_name: 'Антонов Сергей',name: 'Заглушка', amount: 1, period: '06.06.2025-06.06.2025', zenaz: 300.00 },
+    { id: 1, tnaim: 'Горное', vnaim: 'Шнур 16-прядный 6мм', kolich: 1,zenaz:100, zenapr:10, sost: null },
+    { id: 2, tnaim: 'Горное', vnaim: 'Карабин "Ринг"(сталь)', kolich: 1,zenaz:200, zenapr:20, sost: null },
+    { id: 3, tnaim: 'Водное', vnaim: 'Заглушка', kolich: 1,zenaz:300, zenapr:30, sost: 'Заглушка' },
 ];
 
-function EditToolbar(props) {
-    const { setRows, setRowModesModel } = props;
-
+function EditToolbar({ setRows, setRowModesModel }) {
     const handleClick = () => {
-        const id = randomId();
-        setRows((oldRows) => [
-            ...oldRows,
-            { id, name: '', age: '', role: '', isNew: true },
-        ]);
-        setRowModesModel((oldModel) => ({
-            ...oldModel,
-            [id]: { mode: GridRowModes.Edit, fieldToFocus: 'name' },
-        }));
-    };
-    const handleClick2 = () => {
-        const id = randomId();
         
     };
 
     return (
-        <Toolbar>
-            <Tooltip title="Печать акта приема-передачи">
-                <ToolbarButton onClick={handleClick2}>
-                    <AddIcon2 fontSize="small" />
-                </ToolbarButton>
-            </Tooltip>
-            <Tooltip title="Добавить запись">
-                <ToolbarButton onClick={handleClick}>
+        <GridToolbarContainer>
+            <Tooltip title="Добавить оборудование">
+                <Box component="span" sx={{ cursor: 'pointer', p: 1 }} onClick={handleClick}>
                     <AddIcon fontSize="small" />
-                </ToolbarButton>
+                </Box>
             </Tooltip>
-        </Toolbar>
+        </GridToolbarContainer>
     );
 }
-
-export default function FullFeaturedCrudGrid() {
+export default function AdminApplicationTable2() {
     const [rows, setRows] = React.useState(initialRows);
     const [rowModesModel, setRowModesModel] = React.useState({});
 
@@ -114,44 +92,45 @@ export default function FullFeaturedCrudGrid() {
     };
 
     const columns = [
-        { field: 'id', headerName: 'ID', width: 10, editable: false },
+        { field: 'id', headerName: '№', width: 10, editable: false,hide: false },
         {
-          field: 'user_name',
-          headerName: 'ФИО',
-          width: 220,
-          editable: true,
+            field: 'vnaim',
+            headerName: 'Наименование',
+            width: 220,
+            editable: true,
         },
         {
-          field: 'name',
-          headerName: 'Наименование',
-          width: 220,
-          editable: true,
+            field: 'kolich',
+            headerName: 'Количество',
+            width: 120,
+            editable: true,
+            type: 'number',
         },
         {
-          field: 'amount',
-          headerName: 'Количество',
-          width: 120,
-          editable: true,
-          type: 'number',
+            field: 'zenaz',
+            headerName: 'Залог (₽)',
+            width: 120,
+            editable: true,
+            type: 'number',
         },
         {
-          field: 'period',
-          headerName: 'Период',
-          width: 120,
-          editable: true,
-          type: 'string',
+            field: 'zenapr',
+            headerName: 'Прокат (₽/день)',
+            width: 150,
+            editable: true,
+            type: 'number',
         },
         {
-          field: 'zenaz',
-          headerName: 'Цена залога (руб./день)',
-          width: 120,
-          editable: true,
-          type: 'number',
+            field: 'sost',
+            headerName: 'Состав',
+            width: 250,
+            editable: true,
+            type: 'number',
         },
         {
             field: 'actions',
             type: 'actions',
-            headerName: 'Actions',
+            headerName: 'Действия',
             width: 100,
             cellClassName: 'actions',
             getActions: ({ id }) => {
@@ -178,7 +157,7 @@ export default function FullFeaturedCrudGrid() {
                         />,
                     ];
                 }
-
+                
                 return [
                     <GridActionsCellItem
                         icon={<EditIcon />}
@@ -201,7 +180,7 @@ export default function FullFeaturedCrudGrid() {
     return (
         <Box
             sx={{
-                height: 500,
+                height: 350,
                 width: '100%',
                 '& .actions': {
                     color: 'text.secondary',
@@ -225,6 +204,7 @@ export default function FullFeaturedCrudGrid() {
                     toolbar: { setRows, setRowModesModel },
                 }}
                 showToolbar
+
             />
         </Box>
     );
