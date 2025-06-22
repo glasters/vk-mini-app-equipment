@@ -28,9 +28,10 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
 const initialRows = [
-    { id: 1, name: 'Чёрный Сергей', status: 'Оплачено', date: '2025-06-15' },
-    { id: 2, name: 'Чёрный Сергей', status: 'На рассмотрении', date: '2025-06-14' },
-    { id: 3, name: 'Антонов Сергей', status: 'Оплачено', date: '2025-06-13' },
+    { id: 1, name: 'Чёрный Сергей', status: 'Оплачено', datespo: '06/03/2025-06/03/2025' },
+    { id: 2, name: 'Чёрный Сергей', status: 'На рассмотрении', datespo: '06/05/2025-06/05/2025' },
+    { id: 3, name: 'Антонов Сергей', status: 'Оплачено', datespo: '06/06/2025-06/06/2025' },
+
 ];
 
 function EditToolbar({ setRows, setRowModesModel }) {
@@ -233,6 +234,12 @@ export default function AdminApplicationTable1() {
             valueOptions: ['На рассмотрении', 'Предварительно оплачено', 'Оплачено', 'Сдано'],
         },
         {
+            field: 'datespo',
+            headerName: 'Срок аренды',
+            width: 180,
+            editable: true,
+        },
+        {
             field: 'actions',
             type: 'actions',
             headerName: 'Действия',
@@ -335,6 +342,7 @@ export default function AdminApplicationTable1() {
                             <>
                                 <Typography>ФИО: {selectedRow.name}</Typography>
                                 <Typography>Статус: {selectedRow.status}</Typography>
+                                <Typography>Срок аренды: {selectedRow.status}</Typography>
                             </>
                         )}
                         <AdminEquipmentTable

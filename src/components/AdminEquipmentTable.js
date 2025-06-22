@@ -201,6 +201,7 @@ export default function AdminEquipmentTable({ applicationId, onDataChange }) {
                 processRowUpdate={processRowUpdate}
                 slots={{ toolbar: EditToolbar }}
                 slotProps={{ toolbar: { setRows, setRowModesModel } }}
+                showToolbar
             />
         </Box>
     );
