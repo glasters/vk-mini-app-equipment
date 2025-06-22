@@ -123,13 +123,12 @@ export default function AdminApplicationTable1() {
 
     const handlePrintClick = async (id) => {
         function setPrint() {
-          const closePrint = () => {
+        const closePrint = () => {
             document.body.removeChild(this);
-          };
-          this.contentWindow.onbeforeunload = closePrint;
-          this.contentWindow.onafterprint = closePrint;
-          this.contentWindow.print();
-          
+        };
+        this.contentWindow.onbeforeunload = closePrint;
+        this.contentWindow.onafterprint = closePrint;
+        this.contentWindow.print();
         }
 
             const hideFrame = document.createElement("iframe");
