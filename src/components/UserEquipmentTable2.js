@@ -182,7 +182,7 @@ export default function FullFeaturedCrudGrid() {
                 slotProps={{
                     toolbar: { setRows, setRowModesModel },
                 }}
-                
+                showToolbar
 
             />
         </Box>
